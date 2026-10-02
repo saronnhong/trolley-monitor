@@ -181,19 +181,9 @@ Directions are `UTC` or `San Ysidro`. Movement values are `moving`, `stopped`, o
 
 Data comes from [MTS’s developer resources](https://www.sdmts.com/business-center/app-developers) and is subject to the terms linked there.
 
-The importer uses `routes.txt`, `trips.txt`, `stop_times.txt`, `stops.txt`, and `shapes.txt`. For the development snapshot, supplied cumulative distances were inferred to be miles by comparison with the route geometry: approximately 30.316 supplied units versus 30.35 calculated miles. Distances are converted to meters for internal calculations.
+The importer uses `routes.txt`, `trips.txt`, `stop_times.txt`, `stops.txt`, and `shapes.txt`. For the development snapshot, supplied cumulative distances were inferred to be miles.
 
 These are approximate route distances, not surveyed measurements. Southbound simulation reverses the northbound station distances rather than importing separate southbound track geometry.
-
-## Manual verification
-
-- Confirm the station table contains 32 stops with San Ysidro and UTC as endpoints.
-- Confirm trains move in opposite directions and pause at stations.
-- Disconnect one tracker and observe stale, then offline status while the other remains online.
-- Reconnect the tracker and confirm readings resume at its updated position.
-- Stop the backend and confirm the dashboard reports an error while retaining existing train readings; restart it and confirm recovery.
-- Send an invalid reading and confirm HTTP 400.
-- Temporarily increase simulator cruise speeds to check terminal arrival behavior, then restore the original speeds.
 
 ## Limitations
 
@@ -203,12 +193,3 @@ These are approximate route distances, not surveyed measurements. Southbound sim
 - Trains stop at their destination; return trips are not automatic.
 - No live MTS vehicle feed, authentication, persistent database, or map is included.
 - The Vite proxy is a development configuration; production hosting requires API routing configuration.
-
-## Possible extensions
-
-- Leaflet map showing stations, route geometry, and last known train locations.
-- Time since the last reading displayed in the table.
-- Green Line support.
-- Server-Sent Events in place of dashboard polling.
-- Persistent readings and automated API tests.
-- Deployment and screenshots for the portfolio.
