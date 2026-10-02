@@ -1,0 +1,297 @@
+{
+  "id": "510",
+  "name": "Blue Line",
+  "direction": "UTC",
+  "shapeId": "510_0_352",
+  "distanceSource": "MTS GTFS; distance units inferred as miles",
+  "stations": [
+    {
+      "id": "75000",
+      "sequence": 1,
+      "name": "San Ysidro Station",
+      "latitude": 32.54456598,
+      "longitude": -117.02953904,
+      "distanceFromStartMeters": 0,
+      "distanceFromPreviousMeters": 0
+    },
+    {
+      "id": "75002",
+      "sequence": 2,
+      "name": "Beyer Blvd Station",
+      "latitude": 32.55765602,
+      "longitude": -117.04706184,
+      "distanceFromStartMeters": 2257.9096320000003,
+      "distanceFromPreviousMeters": 2257.9096320000003
+    },
+    {
+      "id": "75004",
+      "sequence": 3,
+      "name": "Iris Avenue Station",
+      "latitude": 32.569762,
+      "longitude": -117.06717616,
+      "distanceFromStartMeters": 4570.53696,
+      "distanceFromPreviousMeters": 2312.6273279999996
+    },
+    {
+      "id": "75006",
+      "sequence": 4,
+      "name": "Palm Avenue Station",
+      "latitude": 32.58477987,
+      "longitude": -117.08375293,
+      "distanceFromStartMeters": 7029.614592000001,
+      "distanceFromPreviousMeters": 2459.077632000001
+    },
+    {
+      "id": "75008",
+      "sequence": 5,
+      "name": "Palomar Street Station",
+      "latitude": 32.60329399,
+      "longitude": -117.08508185,
+      "distanceFromStartMeters": 8967.264768000001,
+      "distanceFromPreviousMeters": 1937.6501759999996
+    },
+    {
+      "id": "75010",
+      "sequence": 6,
+      "name": "H Street Station",
+      "latitude": 32.63017791,
+      "longitude": -117.09557712,
+      "distanceFromStartMeters": 12176.296704,
+      "distanceFromPreviousMeters": 3209.031936
+    },
+    {
+      "id": "75012",
+      "sequence": 7,
+      "name": "E Street Station",
+      "latitude": 32.63910499,
+      "longitude": -117.09905693,
+      "distanceFromStartMeters": 13225.588992,
+      "distanceFromPreviousMeters": 1049.2922880000003
+    },
+    {
+      "id": "75014",
+      "sequence": 8,
+      "name": "24th Street Station",
+      "latitude": 32.66196491,
+      "longitude": -117.10800607,
+      "distanceFromStartMeters": 15948.599040000001,
+      "distanceFromPreviousMeters": 2723.0100480000006
+    },
+    {
+      "id": "75016",
+      "sequence": 9,
+      "name": "8th Street Station",
+      "latitude": 32.67501911,
+      "longitude": -117.11309508,
+      "distanceFromStartMeters": 17425.976832,
+      "distanceFromPreviousMeters": 1477.3777919999989
+    },
+    {
+      "id": "75106",
+      "sequence": 10,
+      "name": "Pacific Fleet Station",
+      "latitude": 32.68609889,
+      "longitude": -117.12479089,
+      "distanceFromStartMeters": 19172.115072,
+      "distanceFromPreviousMeters": 1746.1382400000014
+    },
+    {
+      "id": "75104",
+      "sequence": 11,
+      "name": "Harborside Station",
+      "latitude": 32.6913259,
+      "longitude": -117.1328639,
+      "distanceFromStartMeters": 20129.674752,
+      "distanceFromPreviousMeters": 957.5596799999983
+    },
+    {
+      "id": "75018",
+      "sequence": 12,
+      "name": "Barrio Logan Station",
+      "latitude": 32.69812698,
+      "longitude": -117.14666504,
+      "distanceFromStartMeters": 21623.145984,
+      "distanceFromPreviousMeters": 1493.4712320000015
+    },
+    {
+      "id": "75102",
+      "sequence": 13,
+      "name": "12th & Imperial Station",
+      "latitude": 32.70587009,
+      "longitude": -117.1532179,
+      "distanceFromStartMeters": 22756.124160000003,
+      "distanceFromPreviousMeters": 1132.978176000001
+    },
+    {
+      "id": "75092",
+      "sequence": 14,
+      "name": "Park & Market Station",
+      "latitude": 32.71105999,
+      "longitude": -117.15372103,
+      "distanceFromStartMeters": 23372.502912,
+      "distanceFromPreviousMeters": 616.3787519999986
+    },
+    {
+      "id": "75090",
+      "sequence": 15,
+      "name": "City College Station",
+      "latitude": 32.71628902,
+      "longitude": -117.15417292,
+      "distanceFromStartMeters": 23990.491008,
+      "distanceFromPreviousMeters": 617.9880960000006
+    },
+    {
+      "id": "75088",
+      "sequence": 16,
+      "name": "Fifth Avenue Station",
+      "latitude": 32.71679,
+      "longitude": -117.15967791,
+      "distanceFromStartMeters": 24499.043712000002,
+      "distanceFromPreviousMeters": 508.5527040000012
+    },
+    {
+      "id": "75087",
+      "sequence": 17,
+      "name": "Civic Center Station",
+      "latitude": 32.71677298,
+      "longitude": -117.16242896,
+      "distanceFromStartMeters": 24753.320064,
+      "distanceFromPreviousMeters": 254.27635199999915
+    },
+    {
+      "id": "75085",
+      "sequence": 18,
+      "name": "America Plaza Station",
+      "latitude": 32.7166269,
+      "longitude": -117.1688139,
+      "distanceFromStartMeters": 25356.824064,
+      "distanceFromPreviousMeters": 603.504
+    },
+    {
+      "id": "75083",
+      "sequence": 19,
+      "name": "Santa Fe Depot",
+      "latitude": 32.71732388,
+      "longitude": -117.169779,
+      "distanceFromStartMeters": 25627.193856,
+      "distanceFromPreviousMeters": 270.3697919999988
+    },
+    {
+      "id": "75080",
+      "sequence": 20,
+      "name": "County Center/Little Italy Station",
+      "latitude": 32.72149387,
+      "longitude": -117.16989795,
+      "distanceFromStartMeters": 26064.933814656,
+      "distanceFromPreviousMeters": 437.7399586560016
+    },
+    {
+      "id": "75078",
+      "sequence": 21,
+      "name": "Middletown Station",
+      "latitude": 32.73378587,
+      "longitude": -117.17492298,
+      "distanceFromStartMeters": 27481.158144,
+      "distanceFromPreviousMeters": 1416.2243293440001
+    },
+    {
+      "id": "75076",
+      "sequence": 22,
+      "name": "Washington Street Station",
+      "latitude": 32.74172394,
+      "longitude": -117.18446791,
+      "distanceFromStartMeters": 28784.726784,
+      "distanceFromPreviousMeters": 1303.568639999998
+    },
+    {
+      "id": "75042",
+      "sequence": 23,
+      "name": "Old Town Station",
+      "latitude": 32.754908,
+      "longitude": -117.19948716,
+      "distanceFromStartMeters": 30936.419712,
+      "distanceFromPreviousMeters": 2151.6929279999995
+    },
+    {
+      "id": "77771",
+      "sequence": 25,
+      "name": "Tecolote Road Station",
+      "latitude": 32.76991399,
+      "longitude": -117.20506166,
+      "distanceFromStartMeters": 32647.150774656002,
+      "distanceFromPreviousMeters": 1710.7310626560022
+    },
+    {
+      "id": "77773",
+      "sequence": 26,
+      "name": "Clairemont Drive Station",
+      "latitude": 32.79006453,
+      "longitude": -117.20612915,
+      "distanceFromStartMeters": 34934.031817344,
+      "distanceFromPreviousMeters": 2286.8810426880023
+    },
+    {
+      "id": "77775",
+      "sequence": 27,
+      "name": "Balboa Avenue Station",
+      "latitude": 32.80585769,
+      "longitude": -117.21406638,
+      "distanceFromStartMeters": 36847.540224000004,
+      "distanceFromPreviousMeters": 1913.5084066559984
+    },
+    {
+      "id": "77778",
+      "sequence": 28,
+      "name": "Nobel Drive Station",
+      "latitude": 32.86696566,
+      "longitude": -117.23038762,
+      "distanceFromStartMeters": 44368.004736,
+      "distanceFromPreviousMeters": 7520.464511999998
+    },
+    {
+      "id": "77780",
+      "sequence": 29,
+      "name": "VA Medical Center Station",
+      "latitude": 32.87425324,
+      "longitude": -117.22981838,
+      "distanceFromStartMeters": 45196.816896000004,
+      "distanceFromPreviousMeters": 828.812160000001
+    },
+    {
+      "id": "77782",
+      "sequence": 30,
+      "name": "UCSD Central Campus Station",
+      "latitude": 32.87844073,
+      "longitude": -117.23177898,
+      "distanceFromStartMeters": 45768.132406656,
+      "distanceFromPreviousMeters": 571.3155106559991
+    },
+    {
+      "id": "77784",
+      "sequence": 31,
+      "name": "UCSD Health La Jolla Station",
+      "latitude": 32.88181636,
+      "longitude": -117.22349207,
+      "distanceFromStartMeters": 46783.63008,
+      "distanceFromPreviousMeters": 1015.497673344002
+    },
+    {
+      "id": "77786",
+      "sequence": 32,
+      "name": "Executive Drive Station",
+      "latitude": 32.87413569,
+      "longitude": -117.21404976,
+      "distanceFromStartMeters": 48241.695744,
+      "distanceFromPreviousMeters": 1458.0656639999982
+    },
+    {
+      "id": "77787",
+      "sequence": 33,
+      "name": "UTC Station",
+      "latitude": 32.86920431,
+      "longitude": -117.21401071,
+      "distanceFromStartMeters": 48788.872704,
+      "distanceFromPreviousMeters": 547.1769599999998
+    }
+  ]
+}

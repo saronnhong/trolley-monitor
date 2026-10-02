@@ -1,122 +1,238 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Table from "react-bootstrap/Table";
+import StationTable from "./StationTable";
 
-function App() {
-  const [count, setCount] = useState(0)
 
+function TrainTable({ trains, onSelectTrain }) {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Table responsive hover className="align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Train</th>
+          <th>Direction</th>
+          <th>Next station</th>
+          <th>Distance remaining</th>
+          <th>Speed</th>
+          <th>Status</th>
+          <th>Details</th>
+        </tr>
+      </thead>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <tbody>
+        {trains.map(train => (
+          <tr key={train.id}>
+            <td>{train.id}</td>
+            <td>{train.direction}</td>
+            <td>{train.nextStation}</td>
+            <td>
+              {(train.distanceToNextStationMeters / 1000).toFixed(2)} km
+            </td>
+            <td>{train.speed} km/h</td>
+            <td>
+              <Badge
+                bg={
+                  train.status === "online"
+                    ? "success"
+                    : train.status === "stale"
+                      ? "warning"
+                      : "secondary"
+                }
+                text={train.status === "stale" ? "dark" : undefined}
+              >
+                {train.status}
+              </Badge>
+            </td>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={() => onSelectTrain(train.id)}
+            >
+              Select
+            </Button>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
 }
 
-export default App
+function App() {
+  const [trains, setTrains] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedTrainId, setSelectedTrainId] = useState(null);
+
+  const selectedTrain = trains.find(
+    train => train.id === selectedTrainId
+  );
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let timerId;
+
+    async function loadTrains() {
+      try {
+        const response = await fetch("/api/trains", {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Could not load trains (${response.status})`);
+        }
+
+        const data = await response.json();
+
+        if (!controller.signal.aborted) {
+          setTrains(data);
+          setError("");
+        }
+      } catch (err) {
+        if (!controller.signal.aborted) {
+          setError(err.message);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+          timerId = setTimeout(loadTrains, 3000);
+        }
+      }
+    }
+
+    loadTrains();
+
+    return () => {
+      controller.abort();
+      clearTimeout(timerId);
+    };
+  }, []);
+
+  const [route, setRoute] = useState(null);
+  const [routeLoading, setRouteLoading] = useState(true);
+  const [routeError, setRouteError] = useState("");
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadRoute() {
+      try {
+        const response = await fetch("/api/routes/510", {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Could not load route (${response.status})`);
+        }
+
+        const data = await response.json();
+
+        if (!controller.signal.aborted) {
+          setRoute(data);
+        }
+      } catch (err) {
+        if (!controller.signal.aborted) {
+          setRouteError(err.message);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setRouteLoading(false);
+        }
+      }
+    }
+
+    loadRoute();
+
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <Container as="main" className="py-5">
+      <header className="mb-4">
+        <Badge bg="primary" className="mb-2">
+          Blue Line
+        </Badge>
+
+        <h1>San Diego Trolley Monitor</h1>
+
+        <p className="text-secondary">
+          Simulated train tracking using real San Diego routes.
+        </p>
+      </header>
+
+      <Card className="shadow-sm mb-4">
+        <Card.Header as="h2" className="h5 py-3">
+          Train status
+        </Card.Header>
+
+        <Card.Body>
+          {error && (
+            <p role="alert" className="text-danger">
+              {error}. Displayed readings may be out of date.
+            </p>
+          )}
+
+          {loading ? (
+            <p className="mb-0">Loading trains...</p>
+          ) : trains.length === 0 ? (
+            <p className="mb-0">No train readings available.</p>
+          ) : (
+            <TrainTable
+              trains={trains}
+              onSelectTrain={setSelectedTrainId}
+            />
+          )}
+        </Card.Body>
+      </Card>
+
+      <Card className="shadow-sm">
+        <Card.Body>
+          {selectedTrain ? (
+            <>
+              <h2 className="h5">
+                Selected train: {selectedTrain.id}
+              </h2>
+              <p>Heading toward {selectedTrain.direction}</p>
+              <p className="mb-0">
+                Speed: {selectedTrain.speed} km/h
+              </p>
+            </>
+          ) : (
+            <p className="text-secondary mb-0">
+              Select a train to see its details.
+            </p>
+          )}
+        </Card.Body>
+      </Card>
+
+      <Card className="shadow-sm mt-4">
+        <Card.Header as="h2" className="h5 py-3">
+          Blue Line stations — San Ysidro to UTC
+        </Card.Header>
+
+        <Card.Body>
+          {routeLoading ? (
+            <p className="mb-0">Loading stations...</p>
+          ) : routeError ? (
+            <p role="alert" className="text-danger mb-0">
+              {routeError}
+            </p>
+          ) : route ? (
+            <>
+              <p className="text-secondary">
+                {route.stations.length} stations. Distances use MTS route data.
+              </p>
+
+              <StationTable stations={route.stations} />
+            </>
+          ) : (
+            <p className="mb-0">No route available.</p>
+          )}
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+}
+
+export default App;
