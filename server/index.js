@@ -75,9 +75,19 @@ app.get("/api/trains", (req, res) => {
                     ? "stale"
                     : "online";
 
-        const nextStation = stations.find(
-            station =>
-                station.distanceFromStartMeters > train.positionMeters
+        // const nextStation = stations.find(
+        //     station =>
+        //         station.distanceFromStartMeters > train.positionMeters
+        // );
+        const stationsInTravelOrder =
+            train.direction === "UTC"
+                ? stations
+                : [...stations].reverse();
+
+        const nextStation = stationsInTravelOrder.find(station =>
+            train.direction === "UTC"
+                ? station.distanceFromStartMeters > train.positionMeters
+                : station.distanceFromStartMeters < train.positionMeters
         );
 
         return {
@@ -85,7 +95,9 @@ app.get("/api/trains", (req, res) => {
             status,
             nextStation: nextStation?.name ?? "End of line",
             distanceToNextStationMeters: nextStation
-                ? nextStation.distanceFromStartMeters - train.positionMeters
+                ? Math.abs(
+                    nextStation.distanceFromStartMeters - train.positionMeters
+                )
                 : 0,
         };
     });
@@ -98,16 +110,26 @@ app.get("/api/routes/510", (req, res) => {
 });
 
 app.post("/api/readings", (req, res) => {
-    const { id, speed, positionMeters } = req.body ?? {};
+    const {
+        id,
+        direction,
+        speed,
+        positionMeters,
+        movement,
+        currentStation,
+    } = req.body ?? {};
 
     if (
         typeof id !== "string" ||
         id.trim() === "" ||
+        (direction !== "UTC" && direction !== "San Ysidro") ||
         !Number.isFinite(speed) ||
         speed < 0 ||
         !Number.isFinite(positionMeters) ||
         positionMeters < 0 ||
-        positionMeters > routeLengthMeters
+        positionMeters > routeLengthMeters ||
+        !["moving", "stopped", "finished"].includes(movement) ||
+        (currentStation !== null && typeof currentStation !== "string")
     ) {
         return res.status(400).json({
             error: "A valid id, speed, and route position are required",
@@ -116,10 +138,12 @@ app.post("/api/readings", (req, res) => {
 
     const reading = {
         id: id.trim(),
-        direction: "UTC",
+        direction,
         speed,
         positionMeters,
         receivedAt: Date.now(),
+        movement,
+        currentStation,
     };
 
     trains.set(reading.id, reading);

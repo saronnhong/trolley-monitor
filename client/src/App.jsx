@@ -9,54 +9,67 @@ import StationTable from "./StationTable";
 
 function TrainTable({ trains, onSelectTrain }) {
   return (
-    <Table responsive hover className="align-middle mb-0">
-      <thead>
-        <tr>
-          <th>Train</th>
-          <th>Direction</th>
-          <th>Next station</th>
-          <th>Distance remaining</th>
-          <th>Speed</th>
-          <th>Status</th>
-          <th>Details</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {trains.map(train => (
-          <tr key={train.id}>
-            <td>{train.id}</td>
-            <td>{train.direction}</td>
-            <td>{train.nextStation}</td>
-            <td>
-              {(train.distanceToNextStationMeters / 1000).toFixed(2)} km
-            </td>
-            <td>{train.speed} km/h</td>
-            <td>
-              <Badge
-                bg={
-                  train.status === "online"
-                    ? "success"
-                    : train.status === "stale"
-                      ? "warning"
-                      : "secondary"
-                }
-                text={train.status === "stale" ? "dark" : undefined}
-              >
-                {train.status}
-              </Badge>
-            </td>
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => onSelectTrain(train.id)}
-            >
-              Select
-            </Button>
+    <div>
+      <Table responsive hover className="align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Train</th>
+            <th>Direction</th>
+            <th>Next station</th>
+            <th>Distance remaining</th>
+            <th>Speed</th>
+            <th>Movement</th>
+            <th>Status</th>
+            <th>Details</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+
+        <tbody>
+          {trains.map(train => (
+            <tr key={train.id}>
+              <td>{train.id}</td>
+              <td>{train.direction}</td>
+              <td>{train.nextStation}</td>
+              <td>
+                {(train.distanceToNextStationMeters / 1000).toFixed(2)} km
+              </td>
+              <td>{train.speed} km/h</td>
+              <td>
+                {train.movement === "moving"
+                  ? "Moving"
+                  : train.movement === "finished"
+                    ? `Arrived at ${train.currentStation}`
+                    : `Stopped at ${train.currentStation}`}
+              </td>
+              <td>
+                <Badge
+                  bg={
+                    train.status === "online"
+                      ? "success"
+                      : train.status === "stale"
+                        ? "warning"
+                        : "secondary"
+                  }
+                  text={train.status === "stale" ? "dark" : undefined}
+                >
+                  {train.status}
+                </Badge>
+              </td>
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => onSelectTrain(train.id)}
+              >
+                Select
+              </Button>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <p className="small text-secondary mt-3 mb-0">
+        Offline and stale trackers show their last known readings.
+      </p>
+    </div>
   );
 }
 
